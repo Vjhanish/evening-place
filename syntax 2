@@ -1,0 +1,29 @@
+class Solution {
+    private static int diff[][]={{1,0},{-1,0},{0,-1},{0,1}};
+    public int swimInWater(int[][] grid) {
+        int ans=Integer.MIN_VALUE;
+        Queue<int[]>queue=new PriorityQueue<>((a,b)-> a[0]-b[0]);
+        int R=grid.length;
+        int C=grid[0].length;
+        boolean bool[][]=new boolean[R][C];
+        queue.offer(new int[]{grid[0][0],0,0});
+        bool[0][0]=true;
+        ans=Math.max(ans,grid[0][0]);
+        while(!queue.isEmpty()){
+            int ind[]=queue.poll();
+            ans=Math.max(ans,grid[ind[1]][ind[2]]);
+            if(ind[1]==R-1&&ind[2]==C-1)break;
+            for(int i[]:diff){
+                int ar=i[0]+ind[1];
+                int ac=i[1]+ind[2];
+                if(ar>=0 && ac>=0&&ar<R&&ac<C&&bool[ar][ac]==false){
+                    queue.offer(new int[]{grid[ar][ac],ar,ac});
+                    bool[ar][ac]=true;
+                }
+            }
+
+        }
+        return ans;
+        
+    }
+}
